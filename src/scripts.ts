@@ -506,4 +506,207 @@ console.log(arrElementCount([1,2,2,4])); //4
 console.log(arrElementCount([9,9,9])); //3
 console.log(arrElementCount([4,3,2,1,0])); //5
 
+/*
+Task 31 (page 15)
 
+Write a function that takes an array of numbers as argument
+Return the number of negative values in the array
+*/
+
+const countNegativesInArr = (arr: number[]): number => arr.filter(x => x < 0).length;
+
+console.log('///Task 31');
+console.log(countNegativesInArr([1,-2,2,-4])); //2
+console.log(countNegativesInArr([0,9,1])); //0
+console.log(countNegativesInArr([4,-3,2,1,0])); //1
+
+/*
+Task 32 (page 15)
+
+Write a function that takes an array of numbers as argument
+It should return an array with the numbers sorted in descending order
+*/
+
+const orderInDescend = (arr: number[]): number[] => arr.sort().reverse();
+
+console.log('///Task 32');
+console.log(orderInDescend([1,3,2])); //[3,2,1]
+console.log(orderInDescend([4,2,3,1])); //[4,3,2,1]
+console.log(orderInDescend([4,2,6,1])); //[6,4,2,1]
+
+/*
+Task 33 (page 15)
+
+Write a function that takes an array of strings as argument
+Sort the array elements alphabetically
+Return the result
+*/
+
+const orderInAlphabeth = (arr: string[]): string[] => arr.sort();
+
+console.log('///Task 33');
+console.log(orderInAlphabeth(['b', 'c', 'd', 'a'])); //['a', 'b', 'c', 'd']
+console.log(orderInAlphabeth(['z', 'c', 'd', 'a', 'y', 'a', 'w'])); //['a', 'a', 'c', 'd', 'w', 'y', 'z']
+
+/*
+Task 34 (page 16)
+
+Write a function that takes an array of numbers as argument
+It should return the average of the numbers
+*/
+
+const avarageNumInArr = (arr: number[]): number => arr.reduce((a, b) => a + b) / arr.length;
+
+console.log('///Task 34');
+console.log(avarageNumInArr([10,100,40])); //50
+console.log(avarageNumInArr([10,100,1000])); //370
+console.log(avarageNumInArr([-50,0,50,200])); //50
+
+/*
+Task 35 (page 16)
+
+Write a function that takes an array of strings as argument
+Return the longest string
+*/
+
+const longhestStringInArr = (arr: string[]): string => {
+    let longestString = arr[0];
+    for ( let i = 0; i < arr.length; i++) {
+        if (arr[i].length > longestString.length) {
+            longestString = arr[i]
+        }
+    }
+    return longestString;
+}
+
+console.log('///Task 35');
+console.log(longhestStringInArr(['help', 'me'])); //help
+console.log(longhestStringInArr(['I', 'need', 'candy'])); //candy
+
+/*
+Task 36 (page 16)
+
+Write a function that takes an array as argument
+It should return true if all elements in the array are equal
+It should return false otherwise
+*/
+
+const IsAllArrArgumentsSame = (arr: any[]): boolean => {
+    for ( let i = 0; i < arr.length; i++) {
+        if ( arr[0] !== arr[i] ) {
+            return false;
+        } 
+    }
+    return true;
+}
+
+console.log('///Task 36');
+console.log(IsAllArrArgumentsSame([true, true, true, true])); //true
+console.log(IsAllArrArgumentsSame(['test', 'test', 'test'])); //true
+console.log(IsAllArrArgumentsSame([1,1,1,2])); //false
+console.log(IsAllArrArgumentsSame(['10',10,10,10])); //false
+
+/*
+Task 37 (page 17)
+
+Write a function that takes arguments an arbitrary number of arrays
+It should return an array containing the values of all arrays
+*/
+
+const valuesInAllArr = (...args: any[]): any[] => args.flat();
+
+console.log('///Task 37');
+console.log(valuesInAllArr([1, 2, 3], [4, 5, 6])); //[1, 2, 3, 4, 5, 6]
+console.log(valuesInAllArr(['a', 'b', 'c'], [4, 5, 6])); //['a', 'b', 'c', 4, 5, 6]
+console.log(valuesInAllArr([true, true], [1, 2], ['a', 'b'])); //[true, true, 1, 2, 'a', 'b']
+
+/*
+Task 38 (page 17)
+
+Write a function that takes an array of objects as argument
+Sort the array by property b in ascending order
+Return the sorted array
+*/
+
+const sortObjInAscend = (arr: any[]): any[] => arr.sort((keyA, keyB) => keyA.b > keyB.b ? 1: -1);
+
+console.log('///Task 38');
+console.log(sortObjInAscend([{a:1,b:2},{a:5,b:4}])) //[{a:1,b:2},{a:5,b:4}]
+console.log(sortObjInAscend([{a:2,b:10},{a:5,b:4}])) //[{a:5,b:4},{a:2,b:10}]
+console.log(sortObjInAscend([{a:1,b:7},{a:2,b:1}])) //[{a:2,b:1},{a:1,b:7}]
+console.log(sortObjInAscend([{a:2,b:10},{a:5,b:4},{a:3,b:7},{a:6,b:14},{a:1,b:2}])) //[{a:1,b:2},{a:5,b:4},{a:3,b:7},{a:2,b:10},{a:6,b:14}]
+
+/*
+Task 39 (page 17)
+
+Write a function that takes two arrays as arguments
+Merge both arrays and remove duplicate values
+Sort the merge result in ascending order
+Return the resulting array
+*/
+
+const merge2Arr = (arr1: any[], arr2: any[]) => {
+    const sortedArr: any[] = arr1.concat(arr2).sort((a, b) => a - b);
+    let mergedArr: any[] = [...new Set(sortedArr)];  
+
+    return mergedArr;
+}
+
+console.log('///Task 39');
+console.log(merge2Arr([1, 2, 3], [3, 4, 5])); //[ 1, 2, 3, 4, 5 ]
+console.log(merge2Arr([-10, 22, 333, 42], [-11, 5, 22, 41, 42])); //[ -11, -10, 5, 22, 41,  42, 333]
+
+/*
+Task 40 (page 18)
+
+Write a function that takes an array (a) and a number (b) as arguments
+Sum up all array elements with a value greater than b
+Return the sum
+*/
+
+const sumAllGreatherThanB = (numArr: number[], b: number) => {
+    const filteredArr = numArr.filter((a) => a > b);
+    let greatherSum = filteredArr.reduce((num1, num2) => num1 + num2);
+    return greatherSum;
+}
+
+console.log('///Task 40');
+console.log(sumAllGreatherThanB([1, 2, 3, 4, 5, 6, 7], 2)); //25
+console.log(sumAllGreatherThanB([-10, -11, -3, 1, -4], -3)); //1
+console.log(sumAllGreatherThanB([78, 99, 100, 101, 401], 99)); //602
+
+/*
+Task 41 (page 18)
+
+Write a function that takes two numbers (min and max) as arguments
+Return an array of numbers in the range min to max
+*/
+
+const sumRangeOfMinMax = (min: number, max: number): number[] => {
+    let range: number[] = [];
+    while (min <= max) {
+        range.push(min);
+        min+=1;                
+    }
+    return range;
+}
+
+console.log('///Task 41');
+console.log(sumRangeOfMinMax(2, 10)); //[2, 3, 4, 5, 6, 7, 8, 9, 10]
+console.log(sumRangeOfMinMax(1, 3)); //[1, 2, 3]
+console.log(sumRangeOfMinMax(2, 7)); //[2, 3, 4, 5, 6, 7]
+
+/*
+Task 42 (page 19)
+
+Write a function that takes an array of strings as argument
+Group those strings by their first letter
+Return an object that contains properties with keys representing first letters
+The values should be arrays of strings containing only the corresponding strings
+For example, the array ['Alf', 'Alice', 'Ben'] should be transformed to
+{ a: ['Alf', 'Alice'], b: ['Ben']}
+*/
+
+
+
+console.log('///Task 42');
