@@ -412,8 +412,12 @@ Write a function that takes an array (a) and a value (n) as argument
 Return the nth element of 'a'
 
 */
+const valueOnIndex = (arr:number[], num: number) => arr[num-1];
 
-console.log('///Task 24 nesaprotu');
+console.log('///Task 24');
+console.log(valueOnIndex([1,2,3,4,5],3)); //3
+console.log(valueOnIndex([10,9,8,7,6],5)); //6
+console.log(valueOnIndex([7,2,1,6,3],1)); //7
 
 /*
 Task 25 (page 12)
@@ -952,4 +956,322 @@ console.log('///Task 55');
 console.log(mergeAndFix({ a: 1, b: 2 }, { c: 3, b: 4, e: 5 }))//{ a: 1, b: 2, c: 3, e: 5, d: 4}
 console.log(mergeAndFix({ a: 5, b: 4 }, { c: 3, b: 1, e: 2 }))//{ a: 5, b: 4, c: 3, e: 2, d: 1}
 
+/*
+Task 56 (page 24)
 
+Write a function that takes an object (a) and a number (b) as arguments
+Multiply all values of 'a' by 'b'
+Return the resulting object
+*/
+type ObjectToMultply = {
+    [key :string] : number 
+}
+
+const multiplyObjValues = (obj: ObjectToMultply, multiplier: number) => {
+    let newObj: ObjectToMultply = {};
+    Object.entries(obj).forEach(([key, value]) => {newObj[key] = value * multiplier})
+
+    return newObj;    
+}
+
+console.log('///Task 56');
+console.log(multiplyObjValues({a:1,b:2,c:3},3)); //{a:3,b:6,c:9}
+console.log(multiplyObjValues({j:9, i:2,x:3,z:4},10)); //{j:90,i:20,x:30,z:40}
+console.log(multiplyObjValues({w:15,x:22,y:13},6)); //{w:90,x:132,y:78}
+
+/*
+Task 57 (page 24)
+
+Write a function that takes an object as argument
+Somehow, the properties and keys of the object got mixed up
+Swap the Javascript object's key with its values and return the resulting object
+*/
+
+type ObjectToSwapValues = {
+    [key :string | number] : string | number
+}
+
+const swapObjKeyWithValue = (obj: ObjectToSwapValues) => {    
+    let newObj: ObjectToSwapValues = {};
+    Object.entries(obj).forEach(([key, value]) => { newObj[value] = key });
+
+    return newObj;
+}
+
+
+console.log('///Task 57');
+console.log(swapObjKeyWithValue({z:'a',y:'b',x:'c',w:'d'})); //{a:'z',b:'y',c:'x',d:'w'}
+console.log(swapObjKeyWithValue({2:'a',4:'b',6:'c',8:'d'})); //{a:'2',b:'4',c:'6',d:'8'}
+console.log(swapObjKeyWithValue({a:1,z:24})); //{1:'a',24:'z'}
+
+/*
+Task 58 (page 24)
+
+Write a function that takes an object as argument
+Some of the property values contain empty strings
+Replace empty strings and strings that contain only whitespace with null values
+Return the resulting object
+*/
+
+type ObjectRepWhites = {
+    [key :string] : string 
+}
+
+const replaceWhitespacesInObj = (obj: ObjectRepWhites) => {
+    Object.entries(obj).forEach(([key, value]) => { 
+        if (value.trim() === '') {
+            obj[key] = null;
+        } else {
+            obj[key] = value;  
+        }
+         });
+    return obj;
+}
+
+console.log('///Task 58');
+console.log(replaceWhitespacesInObj({ a: 'a', b: 'b', c: '' })); //{ a: 'a', b: 'b', c: null }
+console.log(replaceWhitespacesInObj({ a: '', b: 'b', c: ' ', d: 'd' })); //{ a: null, b: 'b', c: null, d: 'd' }
+console.log(replaceWhitespacesInObj({ a: 'a', b: 'b ', c: ' ', d: '' })); //{ a: 'a', b: 'b ', c: null, d: null }
+
+/*
+Task 59 (page 25)
+
+Write a function that takes an object as argument containing properties with personal information
+Extract firstName, lastName, size, and weight if available
+If size or weight is given transform the value to a string
+Attach the unit cm to the size
+Attach the unit kg to the weight
+Return a new object with all available properties that we are interested in
+*/
+
+type PersonalInfo = {
+    [key :string] : string | number
+}
+
+const extractFNameLNameSizeWeight = (obj: PersonalInfo) => {
+    const newObj: PersonalInfo = {};
+    Object.entries(obj).forEach(([key, value]) => {
+        if(key === 'fn') {
+            newObj[key] = value;
+        } else if ( key === 'ln'){
+            newObj[key] = value;
+        } else if ( key === 'size') {
+            newObj[key] = value + 'cm';            
+        } else if ( key === 'weight') {
+            newObj[key] = value + 'kg';            
+        }
+    })
+    return newObj;
+}
+
+console.log('///Task 59');
+console.log(extractFNameLNameSizeWeight({fn: 'Lisa', ln: 'Müller', age: 17, size: 175, weight: 67})); //{fn: 'Lisa', ln: 'Müller', size: '175cm', weight: '67kg'}
+console.log(extractFNameLNameSizeWeight({fn: 'Martin', ln: 'Harper', age: 26, email: 'martin.harper@test.de', weight: 102})); //{fn: 'Martin', ln: 'Harper', weight: '102kg'}
+console.log(extractFNameLNameSizeWeight({fn: 'Andrew', ln: 'Harper', age: 81, size: 175, weight: 71})); //{fn: 'Andrew', ln: 'Harper', size: '175cm', weight: '71kg'}
+console.log(extractFNameLNameSizeWeight({fn: 'Matthew', ln: 'Müller', age: 19, email: 'matthew@mueller.de'})); //{fn: 'Matthew', ln: 'Müller'}
+
+/*
+Task 60 (page 25)
+
+Write a function that takes an array of objects and a string as arguments
+Add a property with key 'continent' and value equal to the string to each of the objects
+Return the new array of objects
+Tip: try not to mutate the original array
+*/
+
+
+type ContinentAddTOCountries = {
+    city: string,
+    country: string
+}
+
+const addContinentToArr = (arr: ContinentAddTOCountries[], str: string) => {
+    let newArr = [...arr].map(obj => ({...obj}))
+    for (let i = 0; i < newArr.length; i++) {
+        Object.assign(newArr[i], {continent: str});
+    }
+  //Object.entries(obj).forEach(([key, value]) => { newObj[value] = key });  
+    return newArr;
+}
+
+console.log('///Task 60');
+console.log(addContinentToArr([{ city: 'Tokyo', country: 'Japan' }, { city: 'Bangkok', country: 'Thailand' }], 'Asia'));
+console.log(addContinentToArr([{ city: 'Stockholm', country: 'Sweden' }, { city: 'Paris', country: 'France' }], 'Europe'));
+
+/*
+Task 61 (page 26)
+
+Write a function that takes an array of numbers as argument
+Convert the array to an object
+It should have a key for each unique value of the array
+The corresponding object value should be the number of times the key occurs within the array
+*/
+type MakeNumObj = {
+    [key :number] : number
+}
+
+const makeNewArrFromNum = (arr: number[]) => {
+    let newObj: MakeNumObj  = {};
+    for ( let i = 0 ; i < arr.length; i++ ) {
+        if (!(arr[i] in newObj)) {
+            newObj[arr[i]] = 1;
+        } else {
+            newObj[arr[i]] += 1;
+        }
+    }
+   
+    return newObj;
+}
+
+console.log('///Task 61');
+console.log(makeNewArrFromNum([1,2,2,3])); //{1:1,2:2,3:1}
+console.log(makeNewArrFromNum([9,9,9,99])); //{9:3,99:1}
+console.log(makeNewArrFromNum([4,3,2,1])); //{1:1,2:1,3:1,4:1}
+
+/*
+Task 62 (page 26)
+
+Write a function that takes two date instances as arguments
+It should return true if the dates are equal
+It should return false otherwise
+*/
+
+const compareIfDatesEqual = (date1: Date, date2: Date) => date1.getTime() === date2.getTime();
+
+console.log('///Task 62');
+console.log(compareIfDatesEqual(new Date('2000/01/01 08:00:00'), new Date('2000/01/01 08:45:00'))); //false
+console.log(compareIfDatesEqual(new Date('2000/01/01 08:00:00'), new Date('2000/01/01 08:00:00'))); //true
+console.log(compareIfDatesEqual(new Date('2001/01/01 08:00:00'), new Date('2000/01/01 08:00:00'))); //false
+
+/*
+Task 63 (page 26)
+
+Write a function that takes two date instances as argument
+It should return the number of days that lies between those dates
+*/
+
+const howManyDaysBetween = (date1: Date, date2: Date) => {
+    const time1 = date1.getTime();
+    const time2 = date2.getTime();
+    const diff = Math.abs(time1-time2)
+
+    return diff / (1000 * 60 * 60 * 24);
+}
+
+console.log('///Task 63 OpenAi');
+console.log(howManyDaysBetween(new Date('2020-06-11'), new Date('2020-06-01'))); //10
+console.log(howManyDaysBetween(new Date('2000-01-01'), new Date('2020-06-01'))); //7457
+
+/*
+Task 64 (page 27)
+
+Write a function that takes two date instances as argument
+It should return true if they fall on the exact same day
+It should return false otherwise
+*/
+const itIsInSameDay = (date1: Date, date2: Date) => {
+    const day1 = date1.getDay()
+    const day2 = date2.getDay()
+    if (day1 === day2) {
+        return true;
+    }
+
+    return false;
+}
+
+console.log('///Task 64');
+console.log(itIsInSameDay(new Date('2000/01/01'), new Date('2000/01/01'))); //true
+console.log(itIsInSameDay(new Date('2000/01/01'), new Date('2000/01/02'))); //false
+console.log(itIsInSameDay(new Date('2001/01/01'), new Date('2000/01/01'))); //false
+console.log(itIsInSameDay(new Date('2000/11/01'), new Date('2000/01/01'))); //false
+
+
+/*
+Task 65 (page 28)
+
+Write a function that takes two number arrays as parameters 
+and return an array which contains elements from both 
+arrays
+*/
+
+const spreadTwoNrArrInOne = (arr1: number[], arr2: number[]) => [...arr1, ...arr2];
+
+console.log('///Task 65');
+console.log(spreadTwoNrArrInOne([1, 2], [3, 4])); //[1, 2, 3, 4]
+console.log(spreadTwoNrArrInOne([1, 2], [3, 4, 5, 6])); //[1, 2, 3, 4, 5, 6]
+
+/*
+Task 66 (page 28)
+
+Write a function that takes an array and a string as parameters 
+and return an array which contains all elements from the given array
+and the given string as the last element
+*/
+
+const pushInArrEndStr = (arr: string[], str: string):string[] => {
+       arr.push(str);
+
+       return arr; 
+}
+console.log('///Task 66');
+console.log(pushInArrEndStr(['Apple', 'Orange', 'Banana'], 'Kiwi')); //['Apple', 'Orange', 'Banana', 'Kiwi']
+
+/*
+Task 67 (page 28)
+
+Write a function that takes an array and a string as parameters 
+and return an array which contains all elements from the given array
+and the given string as the first element
+*/
+
+const unshiftStrInArr = (arr: string[], str: string ) => {
+    arr.unshift(str);
+    
+    return arr;
+}
+
+console.log('///Task 67');
+console.log(unshiftStrInArr(['Apple', 'Orange', 'Banana'], 'Kiwi')); //['Kiwi', 'Apple', 'Orange', 'Banana']
+
+/*
+Task 68 (page 28)
+
+Write a function that takes two objects as parameters 
+and return an object which contains properties from both 
+objects
+*/
+type SpreadObj = {
+    [key:string]: number
+}
+
+const spreadObjects = (obj1:SpreadObj, obj2:SpreadObj) => {
+    const newObj = {...obj1, ...obj2};
+
+    return newObj;
+}
+
+console.log('///Task 68');
+console.log(spreadObjects({ a:1, b:2 }, { c:3, d:4, e:5, f:6 })); //{ a:1, b:2, c:3, d:4, e:5, f:6 }
+
+/*
+Task 69 (page 29)
+
+Write a function that takes an object and a string as parameters 
+and return an object which contains properties from the given object
+and a new property favoriteMovie with the value equal to the given string
+*/
+type FavoriteMovies = {
+    eyeColor: string,
+    age: number
+}
+
+const addNewElementToObj = (obj:FavoriteMovies, str:string) => {
+    const newObj:{[k: string]: any} = {...obj}
+    newObj['favoriteMovie'] = str
+
+    return newObj;
+}
+
+console.log('///Task 69');
+console.log(addNewElementToObj({ eyeColor: 'green', age: 10 }, 'Garfield')) //{ eyeColor: 'green', age: 10, favoriteMovie:  'Garfield' }
+console.log(addNewElementToObj({ eyeColor: 'blue', age: 15 }, 'Twilight')) //{ eyeColor: 'blue', age: 15, favoriteMovie:  'Twilight' }
